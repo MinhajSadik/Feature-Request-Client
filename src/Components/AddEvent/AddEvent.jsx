@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "./AddEvent.css";
 
 const AddEvent = () => {
+  const [imageURL, setImageURL] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    const eventData = {
+      name: data.name,
+      title: data.title,
+      date: data.date,
+      location: data.location,
+      category: data.category,
+      volunteers: data.volunteers,
+      email: data.email,
+      phone: data.phone,
+      imageURL: imageURL,
+    };
+    console.log(eventData);
+    const url = `http://localhost:3000/addEvent`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(eventData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      });
   };
   console.error(errors);
 
@@ -24,7 +48,7 @@ const AddEvent = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result.data.display_url);
+        setImageURL(result.data.display_url);
       });
   };
 
