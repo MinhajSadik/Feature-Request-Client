@@ -1,10 +1,11 @@
 import React from "react";
+import AddEvent from "./Components/AddEvent/AddEvent";
 import "./index.css";
 
 const App = () => {
   return (
-    <div className="text-center">
-      <h1 className="text-center">Hello World</h1>
+    <div className="App">
+      <AddEvent />
     </div>
   );
 };
