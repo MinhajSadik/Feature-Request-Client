@@ -12,7 +12,6 @@ const AddEvent = () => {
   const onSubmit = (data) => {
     const eventData = {
       name: data.name,
-      title: data.title,
       date: data.date,
       location: data.location,
       category: data.category,
@@ -52,40 +51,12 @@ const AddEvent = () => {
       });
   };
 
-  //   const styles = {
-  //     container: {
-  //       display: "flex",
-  //       flexDirection: "column",
-  //       alignItems: "center",
-  //       justifyContent: "center",
-  //     },
-  //     form: {
-  //       display: "flex",
-  //       flexDirection: "column",
-  //       alignItems: "center",
-  //       justifyContent: "center",
-  //     },
-  //     input: {
-  //       width: "100px",
-  //       height: "40px",
-  //       borderRadius: "5px",
-  //       border: "1px solid #ccc",
-  //       padding: "0 10px",
-  //       margin: "10px 0",
-  //     },
-  //   };
   return (
     <>
       <div className="container">
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="allInput">
             <input name="title" {...register("name")} placeholder="Your Name" />
-            <br />
-            <input
-              name="description"
-              {...register("title")}
-              placeholder="Title"
-            />
             <br />
 
             <input name="date" {...register("date")} placeholder="Date" />
