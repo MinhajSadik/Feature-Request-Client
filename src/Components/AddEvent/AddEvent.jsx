@@ -1,26 +1,24 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./AddEvent.css";
 
 const AddEvent = () => {
-  const [imageURL, setImageURL] = useState(null);
+  const [imageURL, setImageURL] = useState();
+  const [events, setEvents] = useState([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  console.error(errors);
   const onSubmit = (data) => {
     const eventData = {
       name: data.name,
       date: data.date,
-      location: data.location,
-      category: data.category,
-      volunteers: data.volunteers,
       email: data.email,
-      phone: data.phone,
       imageURL: imageURL,
     };
-    console.log(eventData);
     const url = `http://localhost:3000/addEvent`;
     fetch(url, {
       method: "POST",
@@ -34,8 +32,6 @@ const AddEvent = () => {
         console.log(result);
       });
   };
-  console.error(errors);
-
   const handleImageUpload = (e) => {
     console.log(e.target.files[0]);
     const imageData = new FormData();
@@ -51,6 +47,27 @@ const AddEvent = () => {
       });
   };
 
+  useEffect(() => {
+    fetch("http://localhost:3000/events")
+      .then((res) => res.json())
+      .then((data) => {
+        setEvents(data);
+      });
+  }, []);
+
+  const deleteEvent = (id) => {
+    fetch(`http://localhost:3000/deleteEvent/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("result", result);
+      });
+  };
+
   return (
     <>
       <div className="container">
@@ -62,33 +79,8 @@ const AddEvent = () => {
             <input name="date" {...register("date")} placeholder="Date" />
             <br />
 
-            <input
-              name="location"
-              {...register("location")}
-              placeholder="Location"
-            />
-            <br />
-
-            <input
-              name="category"
-              {...register("category")}
-              placeholder="Category"
-            />
-            <br />
-
-            <input
-              name="volunteers"
-              {...register("volunteers")}
-              placeholder="Volunteers Name"
-            />
-            <br />
-
             <input name="email" {...register("email")} placeholder="Email" />
             <br />
-
-            <input name="phone" {...register("phone")} placeholder="Phone" />
-            <br />
-
             <input
               name="image"
               {...register("image")}
@@ -100,6 +92,24 @@ const AddEvent = () => {
           </div>
           <input type="submit" />
         </form>
+        <div>
+          {events.map((event) => {
+            return (
+              <>
+                <div key={event._id}>
+                  <br />
+                  <h3>{event.name}</h3>
+                  <p>{event.date}</p>
+                  <p>{event.email}</p>
+                  <img src={event.imageURL} alt={event.name} />
+                </div>
+                <br />
+                <button onClick={(e) => deleteEvent(e)}>Delete</button>
+                <br />
+              </>
+            );
+          })}
+        </div>
       </div>
     </>
   );
