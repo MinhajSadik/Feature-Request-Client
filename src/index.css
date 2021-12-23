@@ -1,4 +1,4 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,10 +9,9 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  
-}
+} */
 
-/* ./src/index.css
+/* ./src/index.css */
 @tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;

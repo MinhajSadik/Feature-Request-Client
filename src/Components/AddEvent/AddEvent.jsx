@@ -8,10 +8,10 @@ const AddEvent = () => {
   const {
     register,
     handleSubmit,
+    // eslint-disable-next-line no-unused-vars
     formState: { errors },
   } = useForm();
 
-  console.error(errors);
   const onSubmit = (data) => {
     const eventData = {
       name: data.name,
@@ -33,7 +33,6 @@ const AddEvent = () => {
       });
   };
   const handleImageUpload = (e) => {
-    console.log(e.target.files[0]);
     const imageData = new FormData();
     imageData.set("key", "c52aaab726332e238f3d9d23a75a804e");
     imageData.append("image", e.target.files[0]);
@@ -65,6 +64,7 @@ const AddEvent = () => {
       .then((res) => res.json())
       .then((result) => {
         console.log("result", result);
+        console.log("deleted", id);
       });
   };
 
@@ -95,18 +95,16 @@ const AddEvent = () => {
         <div>
           {events.map((event) => {
             return (
-              <>
-                <div key={event._id}>
-                  <br />
-                  <h3>{event.name}</h3>
-                  <p>{event.date}</p>
-                  <p>{event.email}</p>
-                  <img src={event.imageURL} alt={event.name} />
-                </div>
+              <div key={event._id}>
                 <br />
-                <button onClick={(e) => deleteEvent(e)}>Delete</button>
-                <br />
-              </>
+                <h3 className="text-center text-white-900 text-3xl font-bold underline">
+                  {event.name}
+                </h3>
+                <p>{event.date}</p>
+                <p>{event.email}</p>
+                <button onClick={() => deleteEvent(event._id)}>Delete</button>
+                <img className="w-10" src={event.imageURL} alt={event.name} />
+              </div>
             );
           })}
         </div>
