@@ -32,6 +32,7 @@ const AddEvent = () => {
         console.log(result);
       });
   };
+
   const handleImageUpload = (e) => {
     const imageData = new FormData();
     imageData.set("key", "c52aaab726332e238f3d9d23a75a804e");
